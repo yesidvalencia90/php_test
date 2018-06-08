@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('title')
-	Users
+	Buses
 @endsection
 
 @section('content-body')
@@ -10,29 +10,29 @@
     <div class="table-title">
         <div class="row">
             <div class="col-sm-6">
-				<h2>Manage <b>Users</b></h2>
+				<h2>Manage <b>Buses</b></h2>
 			</div>
 			<div class="col-sm-6">
-				<a href="#addUserModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>					
+				<a href="#addBusModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Bus</span></a>					
 			</div>
         </div>
     </div>
 
-    @if(count($users) > 0)
+    @if(count($buses) > 0)
 
 	    <table class="table table-striped table-hover">
 	        <thead>
 	            <tr>
 					<th>#</th>
-	                <th>Name</th>
-	                <th>Email</th
+	                <th>Model</th>
+	                <th>Driver</th
 	            </tr>
 	        </thead>
-	        <tbody id="tbody_users">
+	        <tbody id="tbody_buses">
 		        <?php
 		        	$i = 1;
 		        ?>
-	        	@foreach($users as $user)
+	        	@foreach($buses as $bus)
 
 		            <tr>
 						<td>
@@ -43,11 +43,11 @@
 
 							?>
 						</td>
-		                <td>{{ $user->name }}</td>
-		                <td>{{ $user->email }}</td>
+		                <td>{{ $bus->model }}</td>
+		                <td style="width: 30%">{{ $bus->driver }}</td>
 		                <td>
-		                    <a href="#editUserModal" class="edit" data-toggle="modal" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-email="{{ $user->email }}"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-		                    <a href="#deleteUserModal" class="delete" data-toggle="modal" data-id="{{ $user->id }}"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+		                    <a href="#editBusModal" class="edit" data-toggle="modal" data-id="{{ $bus->id }}" data-model="{{ $bus->model }}" data-driver="{{ $bus->driver }}"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+		                    <a href="#deleteBusModal" class="delete" data-toggle="modal" data-id="{{ $bus->id }}"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 		                </td>
 		            </tr>       		
 
@@ -58,7 +58,7 @@
 
     @else
 
-    	{{ 'No users have been added.' }}
+    	{{ 'No buses have been added.' }}
 
     @endif
 
@@ -66,32 +66,28 @@
 
 <!-- User modal create -->
 
-<div id="addUserModal" class="modal fade">
+<div id="addBusModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id="user_form">				
+			<form id="bus_form">				
 				<div class="modal-header">						
-					<h4 class="modal-title">Add User</h4>
+					<h4 class="modal-title">Add Bus</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">					
-					<div id="add_user_alert" class="alert alert-danger hide"></div>
+					<div id="add_bus_alert" class="alert alert-danger hide"></div>
 					<div class="form-group">
-						<label>Name *</label>
-						<input type="text" class="form-control" id="name">
+						<label>Model</label>
+						<input type="text" class="form-control" id="model">
 					</div>
 					<div class="form-group">
-						<label>Email *</label>
-						<input type="email" class="form-control" id="email" autocomplete="off">
-					</div>
-					<div class="form-group">
-						<label>Password *</label>
-						<input type="password" class="form-control" id="password" autocomplete="off">
-					</div>					
+						<label>Driver</label>
+						<input type="email" class="form-control" id="driver" autocomplete="off">
+					</div>				
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="button" class="btn btn-success" id="add_user_button" value="Add">
+					<input type="button" class="btn btn-success" id="add_bus_button" value="Add">
 				</div>
 				<input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
 			</form>
@@ -99,28 +95,28 @@
 	</div>
 </div>
 <!-- Edit Modal HTML -->
-<div id="editUserModal" class="modal fade">
+<div id="editBusModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">						
-					<h4 class="modal-title">Edit User</h4>
+					<h4 class="modal-title">Edit Bus</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">					
-					<div id="edit_user_alert" class="alert alert-danger hide"></div>
+					<div id="edit_bus_alert" class="alert alert-danger hide"></div>
 					<div class="form-group">
-						<label>Name *</label>
-						<input type="text" class="form-control" id="name_edit">
+						<label>Model *</label>
+						<input type="text" class="form-control" id="model_edit">
 					</div>
 					<div class="form-group">
-						<label>Email *</label>
-						<input type="email" class="form-control" id="email_edit" autocomplete="off">
+						<label>Driver *</label>
+						<input type="email" class="form-control" id="driver_edit" autocomplete="off">
 					</div>				
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="button" class="btn btn-success" id="edit_user_button" data-token="{{ csrf_token() }}" value="Edit">
+					<input type="button" class="btn btn-success" id="edit_bus_button" data-token="{{ csrf_token() }}" value="Edit">
 				</div>
 				<input type="hidden" id="_tokenEdt" name="_token" value="{{ csrf_token() }}">
 			</form>
@@ -128,12 +124,12 @@
 	</div>
 </div>
 <!-- Delete Modal HTML -->
-<div id="deleteUserModal" class="modal fade">
+<div id="deleteBusModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">						
-					<h4 class="modal-title">Delete User</h4>
+					<h4 class="modal-title">Delete Bus</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">					
@@ -149,16 +145,16 @@
 	</div>
 </div>
 
-<div id="userDeleted" class="modal fade">
+<div id="busDeleted" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">						
-					<h4 class="modal-title">User Deleted</h4>
+					<h4 class="modal-title">Bus Deleted</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">					
-					<p>User successfully deleted!</p>
+					<p>Bus successfully deleted!</p>
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Continue">
@@ -168,16 +164,16 @@
 	</div>
 </div>
 
-<div id="userUpdated" class="modal fade">
+<div id="busUpdated" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form>
 				<div class="modal-header">						
-					<h4 class="modal-title">User Updated</h4>
+					<h4 class="modal-title">Bus Updated</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">					
-					<p>User successfully Updated!</p>
+					<p>Bus successfully Updated!</p>
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Continue">
@@ -191,6 +187,6 @@
 
 @section('scripts')
 	
-	<script src="{{ asset('/js/users.js') }}"></script>
+	<script src="{{ asset('/js/buses.js') }}"></script>
 
 @endsection

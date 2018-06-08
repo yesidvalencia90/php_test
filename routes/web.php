@@ -33,3 +33,13 @@ Route::put('/user/edit/{id}', 'UserController@edit')->name('editUser');
 
 Route::delete('/user/delete/{id}', 'UserController@delete')->name('deleteUser');
 
+Route::get('/buses','BusController@home')->name('busHome');
+
+Route::post('/bus/add', 'BusController@store')->name('addBus');
+
+Route::get('/bus/get', 'BusController@get')->name('getBus');
+
+Route::put('/bus/edit/{id}', 'BusController@edit')->name('editBus');
+
+Route::delete('/bus/delete/{id}', 'BusController@delete')->name('deleteBus');
+
