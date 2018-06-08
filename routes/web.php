@@ -19,8 +19,17 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
 
-	
+
 
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/users','UserController@home')->name('userHome');
+
+Route::post('/user/add', 'UserController@store')->name('addUser');
+
+Route::get('/user/get', 'UserController@get')->name('getUsers');
+
+Route::put('/user/edit/{id}', 'UserController@edit')->name('editUser');
+
+Route::delete('/user/delete/{id}', 'UserController@delete')->name('deleteUser');
+
