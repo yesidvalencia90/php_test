@@ -60,5 +60,7 @@ Route::delete('/route/delete/{id}', 'RouteController@delete')->name('deleteRoute
 
 //Quotes URL's
 
-//Route::get('/quote','QuoteController@home')->name('quoteHome');
+Route::get('/quote','QuoteController@home')->name('quoteHome');
+
+Route::post('/quote/price', 'QuoteController@price')->name('priceQuote');
 

@@ -32,7 +32,7 @@
 	        <li><a href="{{ url('/users') }}">Users <span class="sr-only">(current)</span></a></li>
 	        <li><a href="{{ url('/buses') }}">Buses</a></li>	 
 	        <li><a href="{{ url('/routes') }}">Routes</a></li>	 
-	        <li><a href="{{ url('/quote') }}">Quote Ticket</a></li>	 
+	        <li><a href="{{ url('/quote') }}">Price Quote</a></li>	 
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
 	        <li>
