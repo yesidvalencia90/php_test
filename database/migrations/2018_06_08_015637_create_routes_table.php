@@ -19,7 +19,7 @@ class CreateRoutesTable extends Migration
             $table->string('origin');
             $table->string('destination');
             $table->integer('bus_is')->unsigned();
-            $table->foreign('bus_is')->references('id')->on('buses')->onDelete('cascade'); 
+            $table->foreign('bus_is')->references('id')->on('buses');
             $table->float('price');            
             $table->timestamps();
         });
