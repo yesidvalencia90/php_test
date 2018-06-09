@@ -29,31 +29,13 @@ class QuoteController extends Controller
 		}else{
 
 			$originRoutes = Route::where('origin',$origin)->get();			
-			$destinationRoutes = Route::where('destination',$destination)->get();
 			$arrayRoutes = [];
+			$cont = 0;
 
 			foreach ($originRoutes as $originRoute) {
-
-				foreach ($destinationRoutes as $destinationRoute) {
-
-					if($originRoute->destination == $destinationRoute->origin){
-
-						array_push($arrayRoutes,$originRoute->id);
-
-						if($destination == $destinationRoute->destination ){
-							
-							array_push($arrayRoutes,$destinationRoute->id);
-
-						}
-
-					}else{
-
-						continue;
-
-					}
-
+				if(count($arrayRoutes) < 2){
+					$arrayRoutes = $this->calculate($destination,$originRoute,$arrayRoutes,$cont);
 				}
-
 			}
 
 			$finalRoutes = Route::whereIn('id',$arrayRoutes)->get();
@@ -62,6 +44,40 @@ class QuoteController extends Controller
 		}
 
 		return response()->json($response);
+
+	}
+
+	public function calculate($destination,$originRoute,$arrayRoutes,$cont){
+
+		$secondStep = Route::where('origin',$originRoute->destination)->get();
+
+		foreach ($secondStep as $second) {
+
+			if($second->destination == $destination){
+
+				array_push($arrayRoutes,$originRoute->id);
+				array_push($arrayRoutes,$second->id);
+
+				break;
+
+			}else if($cont > 5){
+
+				break;
+
+			}else{
+
+				array_push($arrayRoutes,$second->id);
+				$cont ++;
+				$arrayRoutes = $this->calculate($destination,$second,$arrayRoutes,$cont);
+
+			}
+
+			$arrayRoutes = [];
+			array_push($arrayRoutes,$originRoute->id);
+
+		}
+
+		return $arrayRoutes;
 
 	}
 
